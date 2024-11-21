@@ -21,6 +21,16 @@ repositories {
     mavenCentral()
 }
 
+tasks {
+    jar {
+        manifest {
+            attributes["Main-Class"] = "com.example.ApplicationKt"
+        }
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+    }
+}
+
 dependencies {
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-server-freemarker-jvm")
